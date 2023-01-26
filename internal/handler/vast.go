@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) PutUri(c *gin.Context) {
+func (h *Handler) Put_To_Db_VastInfo(c *gin.Context) {
 	var input model.VastModel
 
 	if err := c.BindJSON(&input); err != nil {
@@ -15,7 +15,7 @@ func (h *Handler) PutUri(c *gin.Context) {
 		return
 	}
 
-	id, err := h.service.Vast.PutUri(input)
+	id, err := h.service.Vast.PutVastInfo(input)
 	if err != nil {
 		ErrorMessage(c, http.StatusInternalServerError, err.Error())
 		return

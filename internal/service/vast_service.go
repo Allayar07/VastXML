@@ -24,7 +24,7 @@ func NewVastService(repo repository.VastRepository) *VastService {
 	}
 }
 
-func (s *VastService) PutUri(ad model.VastModel) (string, error) {
+func (s *VastService) PutVastInfo(ad model.VastModel) (string, error) {
 	return s.repos.AdVast(ad)
 }
 
@@ -73,8 +73,8 @@ func (s *VastService) Generate_Vast(id string) error {
 											ID:       "1",
 											Delivery: "progressive",
 											Type:     "video/mp4",
-											Width:    854,
-											Height:   720,
+											Width:    vastModel.AdsWidth,
+											Height:   vastModel.AdsHeight,
 											URI:      vastModel.MediaURI,
 										},
 									},
@@ -134,8 +134,8 @@ func (s *VastService) Generate_Vast(id string) error {
 											ID:       "1",
 											Delivery: "progressive",
 											Type:     "video/mp4",
-											Width:    854,
-											Height:   720,
+											Width:    vastModel.AdsWidth,
+											Height:   vastModel.AdsHeight,
 											URI:      vastModel.MediaURI,
 										},
 									},

@@ -6,7 +6,7 @@ import (
 )
 
 type Vast interface {
-	PutUri(ad model.VastModel) (string, error)
+	PutVastInfo(ad model.VastModel) (string, error)
 	Generate_Vast(id string) error
 }
 
