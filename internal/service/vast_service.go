@@ -2,160 +2,59 @@ package service
 
 import (
 	"encoding/xml"
+	"fmt"
 	"github.com/haxqer/vast"
-	"golang_vast/internal/model"
 	"golang_vast/internal/repository"
+	"golang_vast/internal/service/helpers"
 	"log"
 	"os"
-	"time"
 )
 
 const (
-	VastXML = "./vast.xml"
+	Xml = ".xml"
 )
 
 type VastService struct {
-	repos repository.VastRepository
+	repos *repository.VastPostgres
 }
 
-func NewVastService(repo repository.VastRepository) *VastService {
+func NewVastService(repo *repository.VastPostgres) *VastService {
 	return &VastService{
 		repos: repo,
 	}
 }
 
-func (s *VastService) Generate_Vast(ad model.VastModel) error {
-
-	vastModel, err := s.repos.AdVast(ad)
+func (s *VastService) GenerateVast(id int) error {
+	// Get ad from db
+	ad, err := s.repos.GetAd(id)
 	if err != nil {
 		return err
 	}
-
-	if vastModel.IsSkipable == true {
-		d := vast.Duration(time.Duration(vastModel.SkipTime) * time.Second)
-
-		v := vast.VAST{
-			Version: "3.0",
-			Ads: []vast.Ad{
-				{
-					ID: vastModel.ID,
-					InLine: &vast.InLine{
-						AdSystem: &vast.AdSystem{Name: "DSP"},
-						AdTitle:  vast.CDATAString{CDATA: vastModel.Title},
-						Impressions: []vast.Impression{
-							{ID: "1", URI: ""},
-						},
-
-						Creatives: []vast.Creative{
-
-							{
-								ID:       "1",
-								Sequence: 0,
-								Linear: &vast.Linear{
-									SkipOffset: &vast.Offset{Duration: &d},
-									Duration:   vast.Duration(time.Duration(vastModel.AdsDuration) * time.Second),
-									TrackingEvents: []vast.Tracking{
-										{Event: vast.Event_type_start, URI: "http://82.180.154.172:8090/api/uploads/open/startevent.jpg"},
-										{Event: vast.Event_type_skip, URI: "http://82.180.154.172:8090/api/uploads/open/skip.jpg"},
-										{Event: vast.Event_type_firstQuartile, URI: "http://82.180.154.172:8090/api/uploads/open/25percent.jpg"},
-										{Event: vast.Event_type_pause, URI: "http://82.180.154.172:8090/api/uploads/open/pause.jpg"},
-										{Event: vast.Event_type_midpoint, URI: "http://82.180.154.172:8090/api/uploads/open/midpoint.jpg"},
-										{Event: vast.Event_type_thirdQuartile, URI: "http://82.180.154.172:8090/api/uploads/open/75percent.jpg"},
-										{Event: vast.Event_type_complete, URI: "http://82.180.154.172:8090/api/uploads/open/complete.jpg"},
-									},
-
-									MediaFiles: []vast.MediaFile{
-										{
-											ID:       "1",
-											Delivery: "progressive",
-											Type:     "video/mp4",
-											Width:    vastModel.AdsWidth,
-											Height:   vastModel.AdsHeight,
-											URI:      vastModel.MediaURI,
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		}
-
-		file, err := os.Create(VastXML)
-		if err != nil {
-			log.Fatalln(err)
-			return err
-		}
-
-		defer file.Close()
-		xmlFile := xml.NewEncoder(file)
-
-		if err := xmlFile.Encode(v); err != nil {
-			log.Fatalln(err)
-			return err
-		}
+	var v vast.VAST
+	fmt.Println(ad.IsSkippable)
+	if ad.IsSkippable == true {
+		fmt.Println("true")
+		v = helpers.NewSkippableVastStructure(ad)
 	} else {
-		v := vast.VAST{
-			Version: "3.0",
-			Ads: []vast.Ad{
-				{
-					ID: vastModel.ID,
-					InLine: &vast.InLine{
-						AdSystem: &vast.AdSystem{Name: "DSP"},
-						AdTitle:  vast.CDATAString{CDATA: vastModel.Title},
-						Impressions: []vast.Impression{
-							{ID: "1", URI: ""},
-						},
+		fmt.Println("false")
+		v = helpers.NewUnskippableVastStructure(ad)
+	}
 
-						Creatives: []vast.Creative{
+	filename := fmt.Sprintf("%d%s", ad.Id, Xml)
 
-							{
-								ID:       "1",
-								Sequence: 0,
-								Linear: &vast.Linear{
-									Duration: vast.Duration(time.Duration(vastModel.AdsDuration) * time.Second),
-									TrackingEvents: []vast.Tracking{
-										{Event: vast.Event_type_start, URI: "http://82.180.154.172:8090/api/uploads/open/startevent.jpg"},
-										{Event: vast.Event_type_skip, URI: "http://82.180.154.172:8090/api/uploads/open/skip.jpg"},
-										{Event: vast.Event_type_firstQuartile, URI: "http://82.180.154.172:8090/api/uploads/open/25percent.jpg"},
-										{Event: vast.Event_type_pause, URI: "http://82.180.154.172:8090/api/uploads/open/pause.jpg"},
-										{Event: vast.Event_type_midpoint, URI: "http://82.180.154.172:8090/api/uploads/open/midpoint.jpg"},
-										{Event: vast.Event_type_thirdQuartile, URI: "http://82.180.154.172:8090/api/uploads/open/75percent.jpg"},
-										{Event: vast.Event_type_complete, URI: "http://82.180.154.172:8090/api/uploads/open/complete.jpg"},
-									},
+	file, ErrOs := os.Create(filename)
+	if ErrOs != nil {
+		log.Fatalln(ErrOs)
+		return ErrOs
+	}
 
-									MediaFiles: []vast.MediaFile{
-										{
-											ID:       "1",
-											Delivery: "progressive",
-											Type:     "video/mp4",
-											Width:    vastModel.AdsWidth,
-											Height:   vastModel.AdsHeight,
-											URI:      vastModel.MediaURI,
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		}
+	defer file.Close()
 
-		file, err := os.Create(VastXML)
-		if err != nil {
-			log.Fatalln(err)
-			return err
-		}
+	xmlFile := xml.NewEncoder(file)
 
-		defer file.Close()
-		xmlFile := xml.NewEncoder(file)
-
-		if err := xmlFile.Encode(v); err != nil {
-			log.Fatalln(err)
-			return err
-		}
+	if err = xmlFile.Encode(v); err != nil {
+		log.Fatalln(err)
+		return err
 	}
 
 	return nil

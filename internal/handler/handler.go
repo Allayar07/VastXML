@@ -17,8 +17,8 @@ func NewHandler(service *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	routes := gin.Default()
 
-	routes.GET("/vast/generate", h.VastXML)
-	routes.GET("/vmap", h.VmapXML)
+	routes.GET("/vast/:id", h.generateVast)
+	//routes.GET("/vmap", h.generateVMAP)
 
 	return routes
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/golan_vast.iml" filepath="$PROJECT_DIR$/.idea/golan_vast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/VastXML.iml" filepath="$PROJECT_DIR$/.idea/VastXML.iml" />
     </modules>
   </component>
 </project>

@@ -12,12 +12,12 @@ func main() {
 	server1 := new(server.Server)
 
 	db, err := repository.NewPostgres(repository.Config{
-		Host:     "localhost",
-		Port:     "5432",
-		Username: "postgres",
-		Password: "password0701",
-		DbName:   "beletme",
-		SSlmode:  "disable",
+		Host:     "192.168.1.61",
+		Port:     "5454",
+		Username: "tmtube_admin",
+		Password: "22tmtubeadmin22",
+		DbName:   "tmtube_db",
+		SSLMode:  "disable",
 	})
 	if err != nil {
 		log.Fatalln(err)
@@ -28,7 +28,7 @@ func main() {
 	newService := service.NewService(repost)
 	newHandler := handler.NewHandler(newService)
 
-	if err := server1.Run("8080", newHandler.InitRoutes()); err != nil {
+	if err := server1.Run("8081", newHandler.InitRoutes()); err != nil {
 		return
 	}
 

@@ -1,12 +1,12 @@
 package model
 
 type VastModel struct {
-	ID          string `json:"id"`
-	IsSkipable  bool   `json:"is_Skipable"`
-	SkipTime    int    `json:"skipTime"`
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
 	AdsDuration int64  `json:"adsDuration"`
 	AdsHeight   int    `json:"adsHeight"`
 	AdsWidth    int    `json:"adsWidth"`
-	Title       string `json:"title"`
+	SkipTime    int    `json:"skipTime"`
 	MediaURI    string `json:"mediaURI"`
+	IsSkippable bool   `json:"isSkippable"`
 }

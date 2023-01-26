@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const xml_File = "./vmap.xml"
+const VmapXml = "test_vmap.xml"
 
 var fld = false
 var tru = true
@@ -37,8 +37,7 @@ func (s *VastService) GenerateVMAP() error {
 			},
 		},
 	}
-
-	f, err := os.Create(xml_File)
+	f, err := os.Create(VmapXml)
 	if err != nil {
 		return err
 	}
@@ -46,7 +45,7 @@ func (s *VastService) GenerateVMAP() error {
 	defer f.Close()
 
 	Encoded := xml.NewEncoder(f)
-	if err := Encoded.Encode(vmp); err != nil {
+	if err = Encoded.Encode(vmp); err != nil {
 		return err
 	}
 

@@ -1,23 +1,21 @@
 package handler
 
 import (
-	"golang_vast/internal/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) VastXML(c *gin.Context) {
-	var input model.VastModel
-
-	if err := c.BindJSON(&input); err != nil {
-		ErrorMessage(c, http.StatusBadRequest, err.Error())
+func (h *Handler) generateVast(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		ErrorMessage(c, http.StatusBadRequest, "invalid id param")
 		return
 	}
-
-	err := h.service.Vast.Generate_Vast(input)
-	if err != nil {
+	if err = h.service.Vast.GenerateVast(id); err != nil {
 		ErrorMessage(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+	c.JSON(http.StatusOK, "OK")
 }
