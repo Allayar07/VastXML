@@ -17,7 +17,6 @@ func NewHandler(service *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	routes := gin.Default()
 
-	//routes.POST("/vast", h.Put_To_Db_VastInfo)
 	routes.GET("/vast/generate", h.VastXML)
 	routes.GET("/vmap", h.VmapXML)
 

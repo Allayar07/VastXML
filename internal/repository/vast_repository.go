@@ -35,22 +35,3 @@ func (r *Vast_Repos) AdVast(ad model.VastModel) (model.VastModel, error) {
 
 	return ad, nil
 }
-
-//func (r *Vast_Repos) GetById(id string) (model.VastModel, error) {
-//
-//	var vast model.VastModel
-//	rows, err := r.db.Query("select title, is_Skipable, skip_time, ads_height, ads_width, adsDuration, uri from vast where id=$1", id)
-//	if err != nil {
-//		return model.VastModel{}, err
-//	}
-//
-//	for rows.Next() {
-//		if err := rows.Scan(&vast.Title, &vast.IsSkipable, &vast.SkipTime, &vast.AdsHeight, &vast.AdsWidth, &vast.AdsDuration, &vast.MediaURI); err != nil {
-//			return model.VastModel{}, err
-//		}
-//	}
-//
-//	defer rows.Close()
-//
-//	return vast, nil
-//}

@@ -24,10 +24,6 @@ func NewVastService(repo repository.VastRepository) *VastService {
 	}
 }
 
-func (s *VastService) PutVastInfo(ad model.VastModel) (model.VastModel, error) {
-	return s.repos.AdVast(ad)
-}
-
 func (s *VastService) Generate_Vast(ad model.VastModel) error {
 
 	vastModel, err := s.repos.AdVast(ad)
