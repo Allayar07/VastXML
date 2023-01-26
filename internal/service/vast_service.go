@@ -24,13 +24,13 @@ func NewVastService(repo repository.VastRepository) *VastService {
 	}
 }
 
-func (s *VastService) PutVastInfo(ad model.VastModel) (string, error) {
+func (s *VastService) PutVastInfo(ad model.VastModel) (model.VastModel, error) {
 	return s.repos.AdVast(ad)
 }
 
-func (s *VastService) Generate_Vast(id string) error {
+func (s *VastService) Generate_Vast(ad model.VastModel) error {
 
-	vastModel, err := s.repos.GetById(id)
+	vastModel, err := s.repos.AdVast(ad)
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func (s *VastService) Generate_Vast(id string) error {
 			Version: "3.0",
 			Ads: []vast.Ad{
 				{
-					ID: id,
+					ID: vastModel.ID,
 					InLine: &vast.InLine{
 						AdSystem: &vast.AdSystem{Name: "DSP"},
 						AdTitle:  vast.CDATAString{CDATA: vastModel.Title},
@@ -104,7 +104,7 @@ func (s *VastService) Generate_Vast(id string) error {
 			Version: "3.0",
 			Ads: []vast.Ad{
 				{
-					ID: id,
+					ID: vastModel.ID,
 					InLine: &vast.InLine{
 						AdSystem: &vast.AdSystem{Name: "DSP"},
 						AdTitle:  vast.CDATAString{CDATA: vastModel.Title},

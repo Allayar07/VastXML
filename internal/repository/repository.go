@@ -6,8 +6,8 @@ import (
 )
 
 type VastRepository interface {
-	AdVast(ad model.VastModel) (string, error)
-	GetById(id string) (model.VastModel, error)
+	AdVast(ad model.VastModel) (model.VastModel, error)
+	//GetById(id string) (model.VastModel, error)
 }
 
 type Repository struct {

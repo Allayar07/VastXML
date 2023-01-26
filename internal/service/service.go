@@ -6,8 +6,9 @@ import (
 )
 
 type Vast interface {
-	PutVastInfo(ad model.VastModel) (string, error)
-	Generate_Vast(id string) error
+	PutVastInfo(ad model.VastModel) (model.VastModel, error)
+	Generate_Vast(ad model.VastModel) error
+	GenerateVMAP() error
 }
 
 type Service struct {

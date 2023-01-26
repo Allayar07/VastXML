@@ -34,7 +34,7 @@ func (h *Handler) VastXML(c *gin.Context) {
 		return
 	}
 
-	err := h.service.Vast.Generate_Vast(input.ID)
+	err := h.service.Vast.Generate_Vast(input)
 	if err != nil {
 		ErrorMessage(c, http.StatusInternalServerError, err.Error())
 		return

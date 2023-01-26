@@ -1,3 +1,7 @@
+github.com/akrfjmt/vast v1.0.0 h1:wO6uIFdr61BiZ4q07HcSQ+vXxiGCyR/JtZUkaVJSwIs=
+github.com/akrfjmt/vast v1.0.0/go.mod h1:SjSidaEzljEtC1tBRiObLzFToDW7gm/vu2AnjGIl/1A=
+github.com/akrfjmt/vmap v0.0.0-20190110062335-10e2a0a8f876 h1:+oBr/KzSjf+EcIzBTWj23TvPbmH919l5JtQga5Q+LOw=
+github.com/akrfjmt/vmap v0.0.0-20190110062335-10e2a0a8f876/go.mod h1:zb/Nc2uX6WOAAGc5713IkDASyqFe32Eh+hI/iB204LE=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
@@ -58,6 +62,8 @@ github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7/go.mod h1:YARuvh7BU
 github.com/rogpeppe/go-internal v1.6.1/go.mod h1:xXDCJY+GAPziupqXw64V24skbSoqbTEfhy4qGm1nDQc=
 github.com/rogpeppe/go-internal v1.8.0 h1:FCbCCtXNOY3UtUuHUYaghJg4y7Fd14rXifAYUAtL9R8=
 github.com/rogpeppe/go-internal v1.8.0/go.mod h1:WmiCO8CzOY8rg0OYDC4/i/2WRWAB6poM+XZ2dLUbcbE=
+github.com/rs/vast v0.0.0-20180618195556-06597a11a4c3 h1:PSgAIBGyQP7KW2+EElPsa3qmaya7kCxLSI/GBR176MQ=
+github.com/rs/vast v0.0.0-20180618195556-06597a11a4c3/go.mod h1:gq4gkWd7KdigGXkRdN5GEgBQYAWDTmD4/U65MdCgLxQ=
 github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0=
 github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
