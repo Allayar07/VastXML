@@ -30,8 +30,10 @@ func (s *VastService) GenerateVast(id int) error {
 	if err != nil {
 		return err
 	}
+
 	var v vast.VAST
 	fmt.Println(ad.IsSkippable)
+
 	if ad.IsSkippable == true {
 		fmt.Println("true")
 		v = helpers.NewSkippableVastStructure(ad)

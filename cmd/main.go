@@ -3,13 +3,11 @@ package main
 import (
 	"golang_vast/internal/handler"
 	"golang_vast/internal/repository"
-	"golang_vast/internal/server"
 	"golang_vast/internal/service"
 	"log"
 )
 
 func main() {
-	server1 := new(server.Server)
 
 	db, err := repository.NewPostgres(repository.Config{
 		Host:     "192.168.1.61",
@@ -28,8 +26,9 @@ func main() {
 	newService := service.NewService(repost)
 	newHandler := handler.NewHandler(newService)
 
-	if err := server1.Run("8081", newHandler.InitRoutes()); err != nil {
-		return
+	app := newHandler.InitRoutes()
+	if err := app.Listen(":8080"); err != nil {
+		log.Fatalln(err)
 	}
 
 }

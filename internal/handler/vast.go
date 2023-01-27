@@ -1,21 +1,19 @@
 package handler
 
 import (
+	"github.com/gofiber/fiber/v2"
 	"net/http"
 	"strconv"
-
-	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) generateVast(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+func (h *Handler) generateVast(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
-		ErrorMessage(c, http.StatusBadRequest, "invalid id param")
-		return
+		return ErrorMessage(c, http.StatusBadRequest, "invalid id param")
 	}
 	if err = h.service.Vast.GenerateVast(id); err != nil {
-		ErrorMessage(c, http.StatusInternalServerError, err.Error())
-		return
+		return ErrorMessage(c, http.StatusInternalServerError, err.Error())
 	}
-	c.JSON(http.StatusOK, "OK")
+
+	return c.Status(200).JSON("OK")
 }
