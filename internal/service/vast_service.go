@@ -43,7 +43,6 @@ func (s *VastService) GenerateVast(id int) error {
 	}
 
 	filename := fmt.Sprintf("%d%s", ad.Id, Xml)
-
 	file, ErrOs := os.Create(filename)
 	if ErrOs != nil {
 		log.Fatalln(ErrOs)
